@@ -1,0 +1,15 @@
+spring :
+  jpa:
+    hibernate.ddl-auto : create
+    database-platform : org.hibernate.dialect.H2Dialect
+    show-sql : true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    hikari.jdbc-url : jdbc:h2:mem:~/testdb;MODE=MYSQL;
+    username : sa
+  h2.console.enabled : true
+#  redis:
+#    host: localhost
+#    port: 6379
