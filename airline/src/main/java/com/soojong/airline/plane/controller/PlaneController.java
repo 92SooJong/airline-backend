@@ -29,7 +29,7 @@ public class PlaneController {
 
         MethodTime methodTime = watch.startWatch("PlaneController.findAllPlanes");
         List<Plane> allPlanes = planeService.findAllPlanes(); // 핵심 로직
-        watch.endWatch(methodTime);
+        watch.endWatch(methodTime,true);
         return new ResponseEntity<>(allPlanes,HttpStatus.OK);
 
     }

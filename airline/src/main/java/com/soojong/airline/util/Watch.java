@@ -17,7 +17,9 @@ public class Watch {
         return new MethodTime(methodName,System.currentTimeMillis(),requestId);
     }
 
-    public void endWatch(MethodTime methodTime){
+    public void endWatch(MethodTime methodTime,boolean isRelease){
+
+        if(isRelease) releaseRequestId();
 
         long durationMillis = System.currentTimeMillis() - methodTime.getMethodStartMillis();
         log.info("[{}] {} 메소드 수행 소요시간 : {} 초" , methodTime.getRequestId(),methodTime.getMethodName(), (float)durationMillis/1000 );
@@ -30,6 +32,8 @@ public class Watch {
         return requestId;
     }
 
-
+    private void releaseRequestId(){
+        requestId = null;
+    }
 
 }
