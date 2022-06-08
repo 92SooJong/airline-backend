@@ -22,7 +22,7 @@ public class PlaneService {
 
         MethodTime methodTime = watch.startWatch("PlaneService.findAllPlanes");
         List<Plane> allPlanes = planeRepository.findAll();
-        watch.endWatch(methodTime,false);
+        watch.endWatch(methodTime);
 
         return allPlanes;
     }

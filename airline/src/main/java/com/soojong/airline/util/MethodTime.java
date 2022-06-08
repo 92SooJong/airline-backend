@@ -6,7 +6,8 @@ public class MethodTime {
     private long methodStartMillis;
     private String requestId;
 
-    public MethodTime(String methodName, long methodStartMillis,String requestId) {
+
+    public MethodTime(String methodName, long methodStartMillis, String requestId) {
         this.methodName = methodName;
         this.methodStartMillis = methodStartMillis;
         this.requestId = requestId;
@@ -35,4 +36,5 @@ public class MethodTime {
     public void setRequestId(String requestId) {
         this.requestId = requestId;
     }
+
 }
