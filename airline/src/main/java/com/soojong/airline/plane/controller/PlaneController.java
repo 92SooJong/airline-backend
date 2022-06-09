@@ -27,9 +27,9 @@ public class PlaneController {
     @GetMapping("/api/v1/planes")
     public ResponseEntity<List<Plane>> findAllPlanes(){
 
-        MethodTime methodTime = watch.startWatch("PlaneController.findAllPlanes");
+        MethodTime methodTime = watch.startWatch("PlaneController.findAllPlanes"); // 측정 시작
         List<Plane> allPlanes = planeService.findAllPlanes(); // 핵심 로직
-        watch.endWatch(methodTime);
+        watch.endWatch(methodTime); // 측정 종료
         return new ResponseEntity<>(allPlanes,HttpStatus.OK);
 
     }

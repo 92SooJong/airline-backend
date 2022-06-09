@@ -20,10 +20,21 @@ public class PlaneService {
 
     public List<Plane> findAllPlanes() {
 
-        MethodTime methodTime = watch.startWatch("PlaneService.findAllPlanes");
-        List<Plane> allPlanes = planeRepository.findAll();
-        watch.endWatch(methodTime);
+        MethodTime methodTime = watch.startWatch("PlaneService.findAllPlanes"); // 측정 시작
+        List<Plane> allPlanes = planeRepository.findAll(); // 핵심로직
+        sleep(2500); // 테스트를 위한 2.5초의 딜레이
+        watch.endWatch(methodTime); // 측정 종료
 
         return allPlanes;
     }
+
+    private void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
