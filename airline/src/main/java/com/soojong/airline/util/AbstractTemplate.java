@@ -13,10 +13,8 @@ public abstract class AbstractTemplate<T> {
         T result = call();
         watch.endWatch(methodTime);
         return result;
-
     }
 
     protected abstract T call();
-
 
 }

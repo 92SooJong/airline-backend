@@ -2,6 +2,7 @@ package com.soojong.airline.plane.controller;
 
 import com.soojong.airline.plane.entity.Plane;
 import com.soojong.airline.plane.service.PlaneService;
+import com.soojong.airline.util.AbstractTemplate;
 import com.soojong.airline.util.MethodTime;
 import com.soojong.airline.util.Watch;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +28,18 @@ public class PlaneController {
     @GetMapping("/api/v1/planes")
     public ResponseEntity<List<Plane>> findAllPlanes(){
 
-        MethodTime methodTime = watch.startWatch("PlaneController.findAllPlanes"); // 측정 시작
-        List<Plane> allPlanes = planeService.findAllPlanes(); // 핵심 로직
-        watch.endWatch(methodTime); // 측정 종료
+        AbstractTemplate<List<Plane>> abstractTemplate = new AbstractTemplate(watch){
+
+            @Override
+            protected List<Plane> call() {
+                return planeService.findAllPlanes(); // 핵심 로직
+            }
+        };
+
+        List<Plane> allPlanes = abstractTemplate.execute("PlaneController.findAllPlanes");
+
         return new ResponseEntity<>(allPlanes,HttpStatus.OK);
 
     }
-
-
 
 }
