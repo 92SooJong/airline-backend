@@ -2,9 +2,7 @@ package com.soojong.airline.plane.service;
 
 import com.soojong.airline.plane.entity.Plane;
 import com.soojong.airline.plane.repository.PlaneRepository;
-import com.soojong.airline.util.AbstractTemplate;
-import com.soojong.airline.util.MethodTime;
-import com.soojong.airline.util.Watch;
+import com.soojong.airline.util.WatchStrategyContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,21 +15,14 @@ import java.util.List;
 public class PlaneService {
 
     private final PlaneRepository planeRepository;
-    private final Watch watch;
+    private final WatchStrategyContext watchStrategyContext;
 
     public List<Plane> findAllPlanes() {
 
-
-        AbstractTemplate<List<Plane>> abstractTemplate = new AbstractTemplate(watch){
-
-            @Override
-            protected List<Plane> call() {
-                sleep(2500); // 테스트를 위한 2.5초의 딜레이
-                return planeRepository.findAll(); // 핵심 로직
-            }
-        };
-
-        return abstractTemplate.execute("PlaneService.findAllPlanes");
+        return (List<Plane>) watchStrategyContext.execute(() ->{
+            sleep(2500);
+            return planeRepository.findAll();
+            }, "PlaneService.findAllPlanes");
     }
 
     private void sleep(int millis) {
