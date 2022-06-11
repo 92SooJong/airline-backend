@@ -18,18 +18,19 @@ import java.util.List;
 public class PlaneController{
 
     private final PlaneService planeService;
-    private final WatchStrategyContext watchStrategyContext;
+    private final WatchTemplate watchTemplate;
 
     @GetMapping("/api/v1/planes")
     public ResponseEntity<List<Plane>> findAllPlanes(){
 
-        // Context에 전략을 주입한다.
-        // Context => 시간 측정 기능(Watch)
-        // 전략 => 비즈니스 로직
-        // 즉, Context에 비즈니스 로직(전략)만 바꿔끼워주면 된다.
-        List<Plane> allPlanes = (List<Plane>) watchStrategyContext.execute(planeService::findAllPlanes, "PlaneController.findAllPlanes");
+        List<Plane> allPlanes = watchTemplate.execute(new WatchCallback<List<Plane>>() {
+            @Override
+            public List<Plane> call() {
+                return planeService.findAllPlanes();
+            }
+        }, "PlaneController.findAllPlanes");
 
-        return new ResponseEntity<>(allPlanes,HttpStatus.OK);
+        return new ResponseEntity<>(allPlanes, HttpStatus.OK);
 
     }
 
