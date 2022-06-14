@@ -17,18 +17,11 @@ import java.util.List;
 public class PlaneService {
 
     private final PlaneRepository planeRepository;
-    private final WatchTemplate watchTemplate;
 
     public List<Plane> findAllPlanes() {
 
-        // 익명 내부클래스 형태로 전달
-        return watchTemplate.execute(new WatchCallback<List<Plane>>() {
-            @Override
-            public List<Plane> call() {
-                sleep(2500);
-                return planeRepository.findAll();
-            }
-        }, "PlaneService.findAllPlanes");
+        sleep(2500);
+        return planeRepository.findAll();
 
 
     }
